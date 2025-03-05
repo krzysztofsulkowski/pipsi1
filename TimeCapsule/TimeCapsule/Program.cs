@@ -2,6 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using TimeCapsule;
 using TimeCapsule.Models;
 using Microsoft.AspNetCore.Identity;
+using TimeCapsule.Services;
+using TimeCapsule.Models.DatabaseModels;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +18,10 @@ builder.Services
     .BindConfiguration("PortalSettings")
     .ValidateDataAnnotations()
     .ValidateOnStart();
+
+builder.Services.AddScoped<CapsuleService>();
+builder.Services.AddScoped<ContactService>();
+builder.Services.AddScoped<ProfileService>();
 
 var connectionString = builder.Configuration.GetConnectionString("Database") ?? throw new ArgumentNullException("ConnectionString");
 

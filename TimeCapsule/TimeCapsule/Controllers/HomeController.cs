@@ -6,7 +6,7 @@ using TimeCapsule.Models;
 namespace TimeCapsule.Controllers
 {
     [Authorize]
-    public class HomeController : Controller
+    public class HomeController : TimeCapsuleBaseController
     {
         private readonly ILogger<HomeController> _logger;
 

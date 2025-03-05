@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TimeCapsule.Models;
@@ -11,9 +12,11 @@ using TimeCapsule.Models;
 namespace TimeCapsule.Migrations
 {
     [DbContext(typeof(TimeCapsuleContext))]
-    partial class TimeCapsuleContextModelSnapshot : ModelSnapshot
+    [Migration("20250304181009_AddCapsuleModel")]
+    partial class AddCapsuleModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -85,6 +88,11 @@ namespace TimeCapsule.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("text");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasMaxLength(21)
+                        .HasColumnType("character varying(21)");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
@@ -135,6 +143,10 @@ namespace TimeCapsule.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasDiscriminator().HasValue("IdentityUser");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -342,7 +354,7 @@ namespace TimeCapsule.Migrations
 
                     b.HasIndex("CapsuleId");
 
-                    b.ToTable("CapsuleAttachments");
+                    b.ToTable("CapsuleAttachment");
                 });
 
             modelBuilder.Entity("TimeCapsule.Models.DatabaseModels.CapsuleRecipient", b =>
@@ -376,6 +388,13 @@ namespace TimeCapsule.Migrations
                     b.HasIndex("RecipientUserId1");
 
                     b.ToTable("CapsuleRecipient");
+                });
+
+            modelBuilder.Entity("TimeCapsule.Models.DatabaseModels.ApplicationUser", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+
+                    b.HasDiscriminator().HasValue("ApplicationUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -431,8 +450,8 @@ namespace TimeCapsule.Migrations
 
             modelBuilder.Entity("TimeCapsule.Models.DatabaseModels.Capsule", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "CreatedByUser")
-                        .WithMany()
+                    b.HasOne("TimeCapsule.Models.DatabaseModels.ApplicationUser", "CreatedByUser")
+                        .WithMany("Capsules")
                         .HasForeignKey("CreatedByUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -448,7 +467,7 @@ namespace TimeCapsule.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
+                    b.HasOne("TimeCapsule.Models.DatabaseModels.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId1")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -478,7 +497,7 @@ namespace TimeCapsule.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "RecipientUser")
+                    b.HasOne("TimeCapsule.Models.DatabaseModels.ApplicationUser", "RecipientUser")
                         .WithMany()
                         .HasForeignKey("RecipientUserId1")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -496,6 +515,11 @@ namespace TimeCapsule.Migrations
                     b.Navigation("CapsuleAttachments");
 
                     b.Navigation("CapsuleRecipients");
+                });
+
+            modelBuilder.Entity("TimeCapsule.Models.DatabaseModels.ApplicationUser", b =>
+                {
+                    b.Navigation("Capsules");
                 });
 #pragma warning restore 612, 618
         }
