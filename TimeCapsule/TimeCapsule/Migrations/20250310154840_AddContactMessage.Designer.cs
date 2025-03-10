@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TimeCapsule.Models;
@@ -11,9 +12,11 @@ using TimeCapsule.Models;
 namespace TimeCapsule.Migrations
 {
     [DbContext(typeof(TimeCapsuleContext))]
-    partial class TimeCapsuleContextModelSnapshot : ModelSnapshot
+    [Migration("20250310154840_AddContactMessage")]
+    partial class AddContactMessage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

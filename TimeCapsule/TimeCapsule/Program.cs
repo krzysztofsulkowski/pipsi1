@@ -8,7 +8,7 @@ using TimeCapsule.Models.DatabaseModels;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false).AddEntityFrameworkStores<TimeCapsuleContext>();
+builder.Services.AddIdentity<IdentityUser,IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false).AddEntityFrameworkStores<TimeCapsuleContext>().AddDefaultTokenProviders().AddDefaultUI();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
