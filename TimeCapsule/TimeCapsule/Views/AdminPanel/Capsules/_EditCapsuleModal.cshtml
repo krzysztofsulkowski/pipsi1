@@ -1,0 +1,61 @@
+﻿@using TimeCapsule.Models.Dto
+@model CreateCapsuleDto
+
+<div class="modal fade" id="editCapsuleModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form asp-action="Save" asp-controller="CapsuleManagement"
+                  method="post">
+                @Html.AntiForgeryToken()
+                <div class="modal-header">
+                    <h5 class="modal-title">Edytuj kapsułę</h5>
+                    <button type="button" class="btn-close"
+                            data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="Id" />
+
+                    <div class="mb-3">
+                        <label class="form-label">Tytuł</label>
+                        <input name="Title" class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Typ</label>
+                        <select name="Type" class="form-select">
+                            <option value="">— wybierz —</option>
+                            @foreach (var t in Enum.GetValues(typeof(TimeCapsule.Models.DatabaseModels.CapsuleType)))
+                            {
+                                <option value="@t">@t</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Data otwarcia</label>
+                        <input name="OpeningDate" type="datetime-local"
+                               class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Wprowadzenie</label>
+                        <textarea name="Introduction"
+                                  class="form-control"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Treść wiadomości</label>
+                        <textarea name="MessageContent"
+                                  class="form-control"></textarea>
+                    </div>
+                    @* Analogicznie pola Recipients, Links itd. *@
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary"
+                            data-bs-dismiss="modal">
+                        Anuluj
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        Zapisz zmiany
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

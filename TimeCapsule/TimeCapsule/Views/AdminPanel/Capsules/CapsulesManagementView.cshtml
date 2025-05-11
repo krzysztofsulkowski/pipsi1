@@ -1,0 +1,94 @@
+﻿@using TimeCapsule.Models.Dto
+@model List<CapsuleAdminDto>
+
+@{
+    ViewData["Title"] = "Zarządzanie kapsułami";
+}
+
+<h1>Zarządzanie kapsułami</h1>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+
+<button class="btn btn-primary mb-3"
+        data-bs-toggle="modal" data-bs-target="#createCapsuleModal">
+    Dodaj nową kapsułę
+</button>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Tytuł</th>
+            <th>Typ</th>
+            <th>Utworzył</th>
+            <th>Data otwarcia</th>
+            <th>Status</th>
+            <th>Akcje</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var c in Model)
+        {
+            <tr>
+                <td>@c.Id</td>
+                <td>@c.Title</td>
+                <td>@c.Type</td>
+                <td>@c.CreatedBy</td>
+                <td>@c.OpeningDate.ToString("dd/MM/yyyy HH:mm")</td>
+                <td>@c.Status</td>
+                <td>
+                    <button class="btn btn-sm btn-secondary edit-capsule"
+                            data-id="@c.Id">
+                        Edytuj
+                    </button>
+                    <form asp-action="Delete" asp-route-id="@c.Id"
+                          method="post" class="d-inline">
+                        @Html.AntiForgeryToken()
+                        <button type="submit"
+                                class="btn btn-sm btn-danger"
+                                onclick="return confirm('Na pewno?');">
+                            Usuń
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@* Załaduj partiale z modalami *@
+@await Html.PartialAsync(
+        "~/Views/AdminPanel/Capsules/_CreateCapsuleModal.cshtml",
+        new CreateCapsuleDto())
+@await Html.PartialAsync(
+        "~/Views/AdminPanel/Capsules/_EditCapsuleModal.cshtml",
+        new CreateCapsuleDto())
+
+@section Scripts {
+    <script>
+        $(function(){
+            $('.edit-capsule').click(function(){
+                var id = $(this).data('id');
+                $.get('/AdminPanel/Capsules/GetById/'+id)
+                 .done(function(data){
+                    var m = $('#editCapsuleModal');
+                    m.find('input[name="Id"]').val(data.id);
+                    m.find('input[name="Title"]').val(data.title);
+                    m.find('select[name="Type"]').val(data.type);
+                    m.find('input[name="OpeningDate"]').val(
+                        new Date(data.openingDate)
+                            .toISOString().slice(0,16)
+                    );
+                    m.modal('show');
+                 });
+            });
+        });
+    </script>
+}
