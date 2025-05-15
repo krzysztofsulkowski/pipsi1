@@ -169,6 +169,7 @@ body.auth-page {
         margin-left: 0.5rem;
         cursor: pointer;
         color: #ffffff;
+        text-decoration: none !important;
     }
 
 /* 13) Responsywność */

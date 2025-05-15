@@ -18,6 +18,7 @@ namespace TimeCapsule.Controllers.Admin
         }
 
         [HttpGet]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public async Task<IActionResult> GetForms()
         {
             var sectionsResult = await _formManagementService.GetFormSectionsWithQuestions();
@@ -32,6 +33,7 @@ namespace TimeCapsule.Controllers.Admin
 
         
         [HttpPost("AddSection")]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public async Task<IActionResult> AddSection([FromForm] CreateSectionDto model)
         {
             var result = await _formManagementService.AddSection(model);
@@ -51,6 +53,7 @@ namespace TimeCapsule.Controllers.Admin
         }
 
         [HttpPost("UpdateSection")]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public async Task<IActionResult> UpdateSection([FromForm] UpdateSectionDto model)
         {
             var result = await _formManagementService.UpdateSection(model);
@@ -59,6 +62,7 @@ namespace TimeCapsule.Controllers.Admin
 
 
         [HttpPost("AddQuestion")]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public async Task<IActionResult> AddQuestion([FromForm] CreateQuestionDto model)
         {
             var result = await _formManagementService.AddQuestion(model);
@@ -78,6 +82,7 @@ namespace TimeCapsule.Controllers.Admin
         }
 
         [HttpPost("UpdateQuestion")]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public async Task<IActionResult> UpdateQuestion([FromForm] UpdateQuestionDto model)
         {
             var result = await _formManagementService.UpdateQuestion(model);
@@ -85,6 +90,7 @@ namespace TimeCapsule.Controllers.Admin
         }
 
         [HttpPost("DeleteQuestion/{questionId}")]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public async Task<IActionResult> DeleteQuestion(int questionId)
         {
             if (questionId <= 0)
@@ -100,6 +106,7 @@ namespace TimeCapsule.Controllers.Admin
         }
 
         [HttpPost("DeleteSection/{sectionId}")]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public async Task<IActionResult> DeleteSection(int sectionId)
         {
             if (sectionId <= 0)

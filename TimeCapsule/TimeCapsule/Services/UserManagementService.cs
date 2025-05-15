@@ -18,7 +18,7 @@ namespace TimeCapsule.Services
             _logger = logger;
             _userManager = userManager;
         }
-        public async Task<ServiceResult<DataTableResponse<UserDto>>> GetUsers(DataTableRequest request)
+        public async Task<ServiceResult<DataTableResponse<UserDto>>> GetAllUsers(DataTableRequest request)
         {
             try
             {

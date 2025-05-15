@@ -19,11 +19,14 @@ namespace TimeCapsule.Controllers
             _contactService = contactService;
         }
 
+        [HttpGet]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult Index()
         {
             return View();
         }
-
+        [HttpGet]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult Privacy()
         {
             return View();
@@ -31,6 +34,7 @@ namespace TimeCapsule.Controllers
 
     
         [HttpPost]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public async Task<IActionResult> SubmitMessage([FromForm] ContactMessageViewModel msg)
         {
             if (!ModelState.IsValid)
@@ -53,6 +57,8 @@ namespace TimeCapsule.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [HttpGet]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult FAQ()
         {
             return View();
@@ -66,6 +72,7 @@ namespace TimeCapsule.Controllers
         }
 
         [HttpGet]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult SetLanguage(string culture, string returnUrl)
         {
             Response.Cookies.Append(

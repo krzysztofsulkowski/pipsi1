@@ -7,7 +7,9 @@ namespace TimeCapsule.Controllers.Admin
     {
         [Authorize(Roles = "Admin")]
         [Route("AdminPanel/Capsules")]
-       
+
+        [HttpGet]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult GetCapsules()
         {
             return View();

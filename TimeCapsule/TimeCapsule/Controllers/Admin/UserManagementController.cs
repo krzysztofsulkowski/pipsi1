@@ -24,7 +24,8 @@ namespace TimeCapsule.Controllers.Admin
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetUsers()
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public async Task<IActionResult> UserManagementPanel()
         {
             var roles = await _roleManager.Roles.ToListAsync();
             var viewModel = new UserDto
@@ -37,7 +38,7 @@ namespace TimeCapsule.Controllers.Admin
         [HttpPost("GetAllUsers")]
         public async Task<IActionResult> GetAllUsers([FromForm] DataTableRequest request)
         {
-            var serviceResponse = await _userManagementService.GetUsers(request);
+            var serviceResponse = await _userManagementService.GetAllUsers(request);
             return HandleStatusCodeServiceResult(serviceResponse);
         }
 
@@ -90,12 +91,13 @@ namespace TimeCapsule.Controllers.Admin
         }
 
         [HttpPost("LockUser/{userId}")]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public async Task<IActionResult> LockUser([FromRoute] string userId)
         {
             if (string.IsNullOrEmpty(userId))
             {
                 TempData["ErrorMessage"] = "Nieprawidłowy identyfikator użytkownika";
-                return RedirectToAction("GetUsers");
+                return RedirectToAction("UserManagementPanel");
             }
 
             string? currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -103,7 +105,7 @@ namespace TimeCapsule.Controllers.Admin
             {
                 TempData["ErrorMessage"] = "Nie można zablokować własnego konta";
                 TempData["SuccessMessageId"] = $"user_lock_{userId}_{DateTime.UtcNow.Ticks}";
-                return RedirectToAction("GetUsers");
+                return RedirectToAction("UserManagementPanel");
             }
 
             var result = await _userManagementService.LockUser(userId);
@@ -118,16 +120,17 @@ namespace TimeCapsule.Controllers.Admin
                 TempData["ErrorMessage"] = $"Wystąpił błąd podczas blokowania konta: {result.Error?.Description}";
             }
 
-            return RedirectToAction("GetUsers");
+            return RedirectToAction("UserManagementPanel");
         }
 
         [HttpPost("UnlockUser/{userId}")]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public async Task<IActionResult> UnlockUser([FromRoute] string userId)
         {
             if (string.IsNullOrEmpty(userId))
             {
                 TempData["ErrorMessage"] = "Nieprawidłowy identyfikator użytkownika";
-                return RedirectToAction("GetUsers");
+                return RedirectToAction("UserManagementPanel");
             }
 
             var result = await _userManagementService.UnlockUser(userId);
@@ -142,7 +145,7 @@ namespace TimeCapsule.Controllers.Admin
                 TempData["ErrorMessage"] = $"Wystąpił błąd podczas odblokowywania konta: {result.Error?.Description}";
             }
 
-            return RedirectToAction("GetUsers");
+            return RedirectToAction("UserManagementPanel");
         }
 
         [HttpGet("GetUserById")]
