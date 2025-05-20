@@ -1,0 +1,81 @@
+﻿/* full‐viewport colored background */
+.fp‐page {
+    background: #9FA9B8;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+/* the light grey “card” */
+.fp‐box {
+    background: #ECECEA;
+    border-radius: 20px;
+    padding: 3rem;
+    max-width: 600px;
+    width: 100%;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+    /* heading */
+    .fp‐box h2 {
+        text-align: center;
+        color: #3E4A5E;
+        margin-bottom: 1.5rem;
+    }
+
+/* form layout */
+.fp‐form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* field styling */
+.fp‐field label {
+    display: block;
+    color: #3E4A5E;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+    .fp‐field label span {
+        color: #3E4A5E;
+    }
+
+.fp‐field input {
+    width: 100%;
+    height: 50px;
+    padding: 0 1rem;
+    border: none;
+    border-radius: 10px;
+    background: #F8F8F8;
+    font-size: 1rem;
+}
+
+.fp‐field span {
+    color: #D9534F;
+    font-size: 0.9rem;
+}
+
+/* submit button */
+.fp‐form button {
+    height: 55px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    background: #3E4A5E;
+    color: white;
+    cursor: pointer;
+}
+
+/* required‐note */
+.fp‐note {
+    color: white;
+    font-size: 0.9rem;
+}
+
+    .fp‐note span {
+        font-weight: bold;
+    }

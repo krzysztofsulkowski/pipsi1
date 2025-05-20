@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using TimeCapsule.Models;
@@ -18,11 +19,14 @@ namespace TimeCapsule.Controllers
             _contactService = contactService;
         }
 
+        [HttpGet]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult Index()
         {
             return View();
         }
-
+        [HttpGet]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult Privacy()
         {
             return View();
@@ -30,6 +34,7 @@ namespace TimeCapsule.Controllers
 
     
         [HttpPost]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public async Task<IActionResult> SubmitMessage([FromForm] ContactMessageViewModel msg)
         {
             if (!ModelState.IsValid)
@@ -52,6 +57,8 @@ namespace TimeCapsule.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [HttpGet]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult FAQ()
         {
             return View();
@@ -63,5 +70,19 @@ namespace TimeCapsule.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        [HttpGet]
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public IActionResult SetLanguage(string culture, string returnUrl)
+        {
+            Response.Cookies.Append(
+                CookieRequestCultureProvider.DefaultCookieName,
+                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+                new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) }
+            );
+
+            return LocalRedirect(returnUrl ?? "~/");
+        }
+
     }
 }

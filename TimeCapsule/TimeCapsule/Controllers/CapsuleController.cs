@@ -22,6 +22,9 @@ namespace TimeCapsule.Controllers
             _capsuleService = capsuleService;
             _userManager = userManager;
         }
+
+        [HttpGet]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult Index()
         {
             return View();
@@ -29,6 +32,7 @@ namespace TimeCapsule.Controllers
 
         [HttpGet]
         [Route("Step1")]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult Step1()
         {
             var capsule = HttpContext.Session.GetObject<CreateCapsuleDto>("CurrentCapsule");
@@ -45,6 +49,7 @@ namespace TimeCapsule.Controllers
 
         [HttpPost]
         [Route("SaveStep1")]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult SaveStep1([FromForm] CreateCapsuleDto capsule)
         {
             if (capsule.Type == null || !Enum.IsDefined(typeof(CapsuleType), capsule.Type))
@@ -120,6 +125,7 @@ namespace TimeCapsule.Controllers
 
         [HttpGet]
         [Route("Step2")]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult Step2()
         {
             var capsule = HttpContext.Session.GetObject<CreateCapsuleDto>("CurrentCapsule");
@@ -135,6 +141,7 @@ namespace TimeCapsule.Controllers
 
         [HttpPost]
         [Route("SaveStep2")]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult SaveStep2([FromForm] CreateCapsuleDto capsule)
         {
             if (string.IsNullOrWhiteSpace(capsule.Title))
@@ -163,6 +170,7 @@ namespace TimeCapsule.Controllers
 
         [HttpGet]
         [Route("Step3")]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult Step3()
         {
             var capsule = HttpContext.Session.GetObject<CreateCapsuleDto>("CurrentCapsule");
@@ -178,6 +186,7 @@ namespace TimeCapsule.Controllers
 
         [HttpPost]
         [Route("SaveStep3")]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult SaveStep3([FromForm] CreateCapsuleDto capsule)
         {
             var fullCapsule = HttpContext.Session.GetObject<CreateCapsuleDto>("CurrentCapsule");
@@ -198,6 +207,7 @@ namespace TimeCapsule.Controllers
 
         [HttpGet]
         [Route("Step4")]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public async Task<IActionResult> Step4()
         {
             var capsule = HttpContext.Session.GetObject<CreateCapsuleDto>("CurrentCapsule");
@@ -223,6 +233,7 @@ namespace TimeCapsule.Controllers
 
         [HttpPost]
         [Route("SaveStep4")]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult SaveStep4([FromForm] CreateCapsuleDto capsule)
         {
             var fullCapsule = HttpContext.Session.GetObject<CreateCapsuleDto>("CurrentCapsule");
@@ -245,6 +256,7 @@ namespace TimeCapsule.Controllers
 
         [HttpGet]
         [Route("Step5")]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult Step5()
         {
             var capsule = HttpContext.Session.GetObject<CreateCapsuleDto>("CurrentCapsule");
@@ -259,6 +271,7 @@ namespace TimeCapsule.Controllers
 
         [HttpPost]
         [Route("SaveStep5")]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult SaveStep5([FromForm] CreateCapsuleDto capsule)
         {
             var fullCapsule = HttpContext.Session.GetObject<CreateCapsuleDto>("CurrentCapsule");
@@ -279,6 +292,7 @@ namespace TimeCapsule.Controllers
 
         [HttpGet]
         [Route("Step6")]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult Step6()
         {
             var capsule = HttpContext.Session.GetObject<CreateCapsuleDto>("CurrentCapsule");
@@ -293,6 +307,7 @@ namespace TimeCapsule.Controllers
 
         [HttpGet]
         [Route("DeleteImage")]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult DeleteImage(int imageIndex, string returnStep = "Step6")
         {
             var fullCapsule = HttpContext.Session.GetObject<CreateCapsuleDto>("CurrentCapsule");
@@ -309,6 +324,7 @@ namespace TimeCapsule.Controllers
 
         [HttpPost]
         [Route("SaveStep6")]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public async Task<IActionResult> SaveStep6([FromForm] CreateCapsuleDto capsule, List<IFormFile> uploadedFiles)
         {
             var fullCapsule = HttpContext.Session.GetObject<CreateCapsuleDto>("CurrentCapsule");
@@ -351,6 +367,7 @@ namespace TimeCapsule.Controllers
 
         [HttpGet]
         [Route("Step7")]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult Step7()
         {
             var capsule = HttpContext.Session.GetObject<CreateCapsuleDto>("CurrentCapsule");
@@ -365,6 +382,7 @@ namespace TimeCapsule.Controllers
 
         [HttpPost]
         [Route("SaveStep7")]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult SaveStep7([FromForm] CreateCapsuleDto capsule, string OpenDate, string OpenTime, string PredefinedPeriod)
         {
             var fullCapsule = HttpContext.Session.GetObject<CreateCapsuleDto>("CurrentCapsule");
@@ -422,6 +440,7 @@ namespace TimeCapsule.Controllers
 
         [HttpGet]
         [Route("Step8")]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult Step8()
         {
             var capsule = HttpContext.Session.GetObject<CreateCapsuleDto>("CurrentCapsule");
@@ -436,6 +455,7 @@ namespace TimeCapsule.Controllers
 
         [HttpPost]
         [Route("SaveStep8")]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public async Task<IActionResult> SaveStep8([FromForm] CreateCapsuleDto capsule)
         {
             var fullCapsule = HttpContext.Session.GetObject<CreateCapsuleDto>("CurrentCapsule");
@@ -480,6 +500,7 @@ namespace TimeCapsule.Controllers
 
         [HttpGet]
         [Route("Step9")]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult Step9()
         {
             var capsule = HttpContext.Session.GetObject<CreateCapsuleDto>("CurrentCapsule");

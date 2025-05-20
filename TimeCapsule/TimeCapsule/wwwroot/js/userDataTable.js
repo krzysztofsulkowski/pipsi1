@@ -63,12 +63,12 @@
                             	</li>
                             	<li>
                                 	${row.isLocked ?
-                            `<form method="post" action="/AdminPanel/UnlockUser/${data}" style="margin:0">
+                            `<form method="post" action="/AdminPanel/Users/UnlockUser/${data}" style="margin:0">
                                         	<button type="submit" class="dropdown-item unlock-user">
                                             	<i class="fas fa-unlock"></i> Odblokuj użytkownika
                                         	</button>
                                     	</form>` :
-                            `<form method="post" action="/AdminPanel/LockUser/${data}" style="margin:0">
+                            `<form method="post" action="/AdminPanel/Users/LockUser/${data}" style="margin:0">
                                         	<button type="submit" class="dropdown-item lock-user">
                                             	<i class="fas fa-lock"></i> Zablokuj użytkownika
                                         	</button>
@@ -118,4 +118,6 @@
         });
     });
 });
+
+
 

@@ -28,6 +28,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Views\AdminPanel\Capsules\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Resources\Views\Home\MyCapsules.pl.resx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="8.0.15" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.11" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.13" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.2" />
@@ -43,6 +52,9 @@
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="8.1.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="8.1.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="8.1.1" />
   </ItemGroup>
 
 </Project>

@@ -6,7 +6,7 @@ namespace TimeCapsule.Interfaces
 {
     public interface IUserManagementService
     {
-        Task<ServiceResult<DataTableResponse<UserDto>>> GetUsers(DataTableRequest request);
+        Task<ServiceResult<DataTableResponse<UserDto>>> GetAllUsers(DataTableRequest request);
         Task<ServiceResult> LockUser(string userId);
         Task<ServiceResult> UnlockUser(string userId);
         Task<ServiceResult<UserDto>> CreateUser(UserDto user);

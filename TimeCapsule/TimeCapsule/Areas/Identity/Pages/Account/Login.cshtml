@@ -28,6 +28,13 @@
         <a asp-page="./ForgotPassword" class="forgot-link">Nie pamiętam hasła</a>
 
         <button type="submit" class="btn-login">Zaloguj się</button>
+
+        <div class="text-center mt-4">
+            <a asp-page="./ExternalLogin" asp-route-provider="Google" asp-route-returnUrl="~/"
+               class="btn-google d-flex align-items-center justify-content-center mx-auto">
+                Zaloguj się przez Google
+            </a>
+        </div>
     </form>
 </div>
 
@@ -41,3 +48,5 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+
+

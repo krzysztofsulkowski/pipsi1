@@ -1,4 +1,6 @@
-﻿@using TimeCapsule.Models.Dto
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@using TimeCapsule.Models.Dto
 @using TimeCapsule.Models.DatabaseModels
 @model CreateCapsuleDto
 
@@ -8,10 +10,10 @@
             <div class="col-lg-8 col-md-10 bg-light rounded shadow-sm p-4 my-5">
                 <form asp-controller="TimeCapsule" asp-action="SaveStep1" method="post">
                     <div class="text-center">
-                        <h1 class="display-6 mb-3">Krok 1 z 9: Wybierz typ kapsuły</h1>
+                        <h1 class="display-6 mb-3">@Localizer["StepTitle"]</h1>
 
                         <p class="lead mb-3">
-                            Zdecyduj, jaką kapsułę chcesz stworzyć:
+                            @Localizer["StepDescription"]
                         </p>
                     </div>
 
@@ -25,8 +27,8 @@
                                 <i class="bi bi-person" style="font-size: 2.5rem;"></i>
                             </label>
                             <div class="mt-3">
-                                <h4><strong>Indywidualna</strong></h4>
-                                <small class="text-muted">Tylko Ty masz do niej dostęp. Po otwarciu możesz zdecydować, czy chcesz ją udostępnić innym.</small>
+                                <h4><strong>@Localizer["IndividualTitle"]</strong></h4>
+                                <small class="text-muted">@Localizer["IndividualDescription"]</small>
                             </div>
                         </div>
 
@@ -39,8 +41,8 @@
                                 <i class="bi bi-people" style="font-size: 2.5rem;"></i>
                             </label>
                             <div class="mt-3">
-                                <h4><strong>Dla kogoś</strong></h4>
-                                <small class="text-muted">Zrób niespodziankę bliskiej osobie i podaruj jej kapsułę. Oboje będziecie mieć do niej dostęp.</small>
+                                <h4><strong>@Localizer["ForSomeoneTitle"]</strong></h4>
+                                <small class="text-muted">@Localizer["ForSomeoneDescription"]</small>
                             </div>
                         </div>
                     </div>
@@ -48,11 +50,11 @@
                     <!-- Kontener dla pól email -->
                     <div id="pairCapsuleOptions" class="mt-4 mb-4" style="display: @(Model.Type == CapsuleType.DlaKogos ? "block" : "none");">
                         <div class="text-center mb-4">
-                            <h4 class="text-secondary">Dobry wybór!</h4>
+                            <h4 class="text-secondary">@Localizer["GoodChoice"]</h4>
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">Dodaj odbiorcę listu:</label>
+                            <label class="form-label">@Localizer["AddRecipient"]</label>
                             <div id="recipientEmailsContainer">
                                 @if (Model.Recipients != null && Model.Recipients.Any())
                                 {
@@ -82,23 +84,23 @@
 
                             <!-- Przycisk dodawania odbiorców -->
                             <button type="button" class="btn btn-outline-secondary mt-2" id="addRecipientBtn">
-                                <i class="bi bi-plus-lg"></i> Dodaj więcej odbiorców
+                                <i class="bi bi-plus-lg"></i> @Localizer["AddMoreRecipients"] 
                             </button>
 
                             <div class="form-check mt-3">
                                 <input class="form-check-input" type="checkbox" value="true" id="notifyRecipients" name="NotifyRecipients"
                                 @(Model.NotifyRecipients ? "checked" : "")>
                                 <label class="form-check-label" for="notifyRecipients">
-                                    Powiadom odbiorców o utworzeniu kapsuły
+                                    @Localizer["NotifyRecipients"]
                                 </label>
-                                <div class="form-text">Odbiorcy otrzymają email z informacją o utworzeniu kapsuły i datą jej otwarcia.</div>
+                                <div class="form-text"> @Localizer["NotifyRecipientsDescription"]</div>
                             </div>
                         </div>
                     </div>
 
                     <div class="d-flex justify-content-between mt-5">
-                        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Wstecz</a>
-                        <button type="submit" class="btn btn-success">Dalej</button>
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary"> @Localizer["Back"]</a>
+                        <button type="submit" class="btn btn-success"> @Localizer["Next"]</button>
                     </div>
                 </form>
             </div>

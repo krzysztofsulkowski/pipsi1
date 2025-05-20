@@ -1,9 +1,11 @@
 ﻿﻿@using Microsoft.AspNetCore.Identity
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="@System.Globalization.CultureInfo.CurrentUICulture.Name">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -44,7 +46,7 @@
                         {
                             <li class="nav-item mx-1">
                                 <a class="btn btn-sm btn-secondary" asp-area="" asp-controller="AdminPanel" asp-action="Index">
-                                    <i class="bi bi-shield-lock me-1"></i>Admin Panel
+                                    <i class="bi bi-shield-lock me-1"></i>@Localizer["AdminPanel"]
                                 </a>
                             </li>
                         }
@@ -52,21 +54,43 @@
                         {
                             <li class="nav-item mx-1">
                                 <a class="btn btn-sm btn-secondary" asp-area="" asp-controller="Profile" asp-action="MyCapsules">
-                                    <i class="bi bi-archive me-1"></i>Moje Kapsuły
+                                    <i class="bi bi-archive me-1"></i>@Localizer["MyCapsules"]
                                 </a>
                             </li>
                         }
                         <li class="nav-item mx-1">
                             <a class="btn btn-sm btn-secondary" asp-area="" asp-controller="Home" asp-action="FAQ">
-                                <i class="bi bi-question-circle me-1"></i>FAQ
+                                <i class="bi bi-question-circle me-1"></i>@Localizer["FAQ"]
                             </a>
                         </li>
                         <li class="nav-item mx-1">
                             <a class="btn btn-sm btn-secondary" asp-area="" asp-controller="Home" asp-action="Privacy">
-                                <i class="bi bi-lock me-1"></i>Polityka Prywatności
+                                <i class="bi bi-lock me-1"></i>@Localizer["PrivacyPolicy"]
                             </a>
                         </li>
                     </ul>
+
+                    <div class="dropdown">
+                        <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="languageDropdown"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-globe"></i>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="languageDropdown">
+                            <li>
+                                <a class="dropdown-item" asp-controller="Home" asp-action="SetLanguage"
+                                   asp-route-culture="pl-PL" asp-route-returnUrl="@Context.Request.Path">
+                                    @Localizer["Polish"]
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" asp-controller="Home" asp-action="SetLanguage"
+                                   asp-route-culture="en-US" asp-route-returnUrl="@Context.Request.Path">
+                                    @Localizer["English"]
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
 
                     <!-- Sekcja użytkownika -->
                     @if (SignInManager.IsSignedIn(User))
@@ -78,13 +102,13 @@
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                                     <li>
-                                        <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index">Szczegóły profilu</a>
+                                        <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index">@Localizer["ProfileDetails"]</a>
                                     </li>
                                     <li><hr class="dropdown-divider"></li>
                                     <li>
                                         <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="/Identity/Account/Login">
                                             <button type="submit" class="dropdown-item">
-                                                <i class="bi bi-box-arrow-right"></i> Wyloguj
+                                                <i class="bi bi-box-arrow-right"></i> @Localizer["Logout"]
                                             </button>
                                         </form>
                                     </li>
@@ -107,13 +131,13 @@
     <footer>
         <div class="footer-content">
             <span>
-                potrzebujesz pomocy?
+                @Localizer["NeedHelp"]
             </span>
             <a href="#" class="d-inline-flex align-items-center"
                data-bs-toggle="modal"
                data-bs-target="#contactModal"
-               title="Skontaktuj się z nami">
-                <span class="footer-content-underline me-2">skontaktuj się z nami!</span>
+               title="@Localizer["ContactUsTitle"]">
+                <span class="footer-content-underline me-2">@Localizer["ContactUs"]</span>
                 <img src="~/images/mail-icon.png" alt="Mail icon" class="mail-icon" />
             </a>
         </div>

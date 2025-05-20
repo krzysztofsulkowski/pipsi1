@@ -1,8 +1,11 @@
-﻿@{    
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
     Layout = null;
 }
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="@System.Globalization.CultureInfo.CurrentUICulture.Name">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -18,9 +21,15 @@
     <!-- stopka pomocy w lewym dolnym rogu -->
     <div class="help-footer">
         potrzebujesz pomocy? skontaktuj się z nami!
-        <button type="button" class="help-btn">✉️</button>
+        <a href="#" class="help-btn"
+           data-bs-toggle="modal"
+           data-bs-target="#contactModal"
+           title="@Localizer["ContactUsTitle"]">
+            <span> ✉️</span>           
+        </a>
     </div>
-
+    
+    <partial name="~/Views/Shared/_ContactModalForm.cshtml" />
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

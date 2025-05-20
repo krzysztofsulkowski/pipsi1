@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Authentication;
 
 namespace TimeCapsule.Areas.Identity.Pages.Account
 {
@@ -46,47 +47,55 @@ namespace TimeCapsule.Areas.Identity.Pages.Account
         }
 
         /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
+        /// 	This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+        /// 	directly from your code. This API may change or be removed in future releases.
         /// </summary>
         [BindProperty]
         public InputModel Input { get; set; }
 
         /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
+        /// 	This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+        /// 	directly from your code. This API may change or be removed in future releases.
         /// </summary>
         public string ProviderDisplayName { get; set; }
 
         /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
+        /// 	This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+        /// 	directly from your code. This API may change or be removed in future releases.
         /// </summary>
         public string ReturnUrl { get; set; }
 
         /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
+        /// 	This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+        /// 	directly from your code. This API may change or be removed in future releases.
         /// </summary>
         [TempData]
         public string ErrorMessage { get; set; }
 
         /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
+        /// 	This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+        /// 	directly from your code. This API may change or be removed in future releases.
         /// </summary>
         public class InputModel
         {
             /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
+            /// 	This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+            /// 	directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [Required]
             [EmailAddress]
             public string Email { get; set; }
         }
-        
-        public IActionResult OnGet() => RedirectToPage("./Login");
+
+        public IActionResult OnGet(string provider, string returnUrl = null)
+        {
+            var redirectUrl = Url.Page("./ExternalLogin",
+                pageHandler: "Callback",
+                values: new { returnUrl });
+            var properties = _signInManager
+                .ConfigureExternalAuthenticationProperties(provider, redirectUrl);
+            return Challenge(properties, provider);
+        }
 
         public IActionResult OnPost(string provider, string returnUrl = null)
         {
@@ -124,17 +133,49 @@ namespace TimeCapsule.Areas.Identity.Pages.Account
             }
             else
             {
-                // If the user does not have an account, then ask the user to create an account.
-                ReturnUrl = returnUrl;
-                ProviderDisplayName = info.ProviderDisplayName;
-                if (info.Principal.HasClaim(c => c.Type == ClaimTypes.Email))
+                // Automatycznie utworzymy konto dla użytkownika zamiast wyświetlać stronę potwierdzenia
+                var email = info.Principal.FindFirstValue(ClaimTypes.Email);
+                if (string.IsNullOrEmpty(email))
                 {
-                    Input = new InputModel
-                    {
-                        Email = info.Principal.FindFirstValue(ClaimTypes.Email)
-                    };
+                    ErrorMessage = "Nie udało się pobrać adresu email z Google.";
+                    return RedirectToPage("./Login", new { ReturnUrl = returnUrl });
                 }
-                return Page();
+
+                var user = CreateUser();
+                await _userStore.SetUserNameAsync(user, email, CancellationToken.None);
+                await _emailStore.SetEmailAsync(user, email, CancellationToken.None);
+
+                var createResult = await _userManager.CreateAsync(user);
+                if (createResult.Succeeded)
+                {
+                    await _userManager.AddToRoleAsync(user, "User");
+
+                    var addLoginResult = await _userManager.AddLoginAsync(user, info);
+                    if (addLoginResult.Succeeded)
+                    {
+                        _logger.LogInformation("Automatycznie utworzono konto dla użytkownika {Email} używając {Provider}.", email, info.LoginProvider);
+
+                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        return LocalRedirect(returnUrl);
+                    }
+                    else
+                    {
+                        foreach (var error in addLoginResult.Errors)
+                        {
+                            ModelState.AddModelError(string.Empty, error.Description);
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (var error in createResult.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                }
+
+                ErrorMessage = "Wystąpił błąd podczas tworzenia konta.";
+                return RedirectToPage("./Login", new { ReturnUrl = returnUrl });
             }
         }
 
@@ -221,3 +262,5 @@ namespace TimeCapsule.Areas.Identity.Pages.Account
         }
     }
 }
+
+

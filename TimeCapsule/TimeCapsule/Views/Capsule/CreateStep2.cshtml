@@ -1,4 +1,6 @@
-﻿@using TimeCapsule.Models.Dto
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@using TimeCapsule.Models.Dto
 @model CreateCapsuleDto
 
 <div class="background-image-for-pages">
@@ -8,23 +10,23 @@
                 <form asp-controller="TimeCapsule" asp-action="SaveStep2" method="post">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="text-center">
-                        <h1 class="display-6 mb-3">Krok 2 z 9: Personalizuj kapsułę</h1>
+                        <h1 class="display-6 mb-3"> @Localizer["StepTitle"]</h1>
 
                         <p class="lead mb-3">
-                            Nadaj tytuł swojej kapsule i wybierz jej wygląd:
+                            @Localizer["StepDescription"]
                         </p>
                     </div>
 
                     <!-- Pole na tytuł -->
                     <div class="mb-4">
-                        <label asp-for="Title" class="form-label">Tytuł kapsuły: <span class="text-danger">*</span></label>
+                        <label asp-for="Title" class="form-label">@Localizer["CapsuleTitle"] <span class="text-danger">*</span></label>
                         <input asp-for="Title" type="text" class="form-control" name="Title" placeholder="Moja kapsuła czasu" required>
                         <span asp-validation-for="Title" class="text-danger"></span>
                     </div>
 
                     <!-- Sekcja wyboru ikony -->
                     <div class="mb-4">
-                        <label class="form-label">Wybierz ikonę:</label>
+                        <label class="form-label">@Localizer["ChooseIcon"]</label>
 
                         <!-- Rząd 1 ikon -->
                         <div class="row mb-2">
@@ -114,7 +116,7 @@
 
                     <!-- Sekcja wyboru koloru -->
                     <div class="mb-4">
-                        <label class="form-label">Wybierz kolor:</label>
+                        <label class="form-label">@Localizer["ChooseColor"]</label>
 
                         <!-- Rząd 1 kolorów -->
                         <div class="row mb-2">
@@ -148,8 +150,8 @@
                     </div>
 
                     <div class="d-flex justify-content-between mt-5">
-                        <a asp-controller="TimeCapsule" asp-action="Step1" class="btn btn-secondary">Wstecz</a>
-                        <button type="submit" class="btn btn-success">Dalej</button>
+                        <a asp-controller="TimeCapsule" asp-action="Step1" class="btn btn-secondary">@Localizer["Back"]</a>
+                        <button type="submit" class="btn btn-success">@Localizer["Next"]</button>
                     </div>
                 </form>
             </div>

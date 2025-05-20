@@ -7,6 +7,9 @@ namespace TimeCapsule.Controllers.Admin
     [Route("AdminPanel")]
     public class AdminDashboardController : TimeCapsuleBaseController
     {
+
+        [HttpGet]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult Index()
         {
             return View("~/Views/AdminPanel/Dashboard/Index.cshtml");
