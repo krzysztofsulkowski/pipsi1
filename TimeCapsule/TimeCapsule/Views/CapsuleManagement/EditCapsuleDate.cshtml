@@ -1,0 +1,16 @@
+﻿@model TimeCapsule.Models.Dto.AdminCapsuleDto
+
+<h2>Zmień datę otwarcia kapsuły</h2>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="CapsuleId" />
+
+    <div class="mb-3">
+        <label asp-for="OpenDate" class="form-label">Nowa data otwarcia</label>
+        <input asp-for="OpenDate" type="date" class="form-control" />
+        <span asp-validation-for="OpenDate" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Zapisz</button>
+    <a asp-action="GetCapsules" class="btn btn-secondary">Anuluj</a>
+</form>

@@ -1,0 +1,56 @@
+﻿@model List<TimeCapsule.Models.Dto.AdminCapsuleDto>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/AdminPanel/UsersManagementView.css" />
+}
+
+<section class="hero">
+    <h1><b>Zarządzanie kapsułami</b><br />Przeglądaj, edytuj daty otwarcia i usuwaj kapsuły czasu</h1>
+</section>
+
+<div class="container mb-4 mt-adjusted">
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <table id="tableCapsules" class="table table-striped table-hover" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Użytkownik</th>
+                        <th>Tytuł</th>
+                        <th>Status</th>
+                        <th>Data otwarcia</th>
+                        <th>Akcje</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var capsule in Model)
+                    {
+                        <tr>
+                            <td>@capsule.CapsuleId</td>
+                            <td>@capsule.UserName</td>
+                            <td>@capsule.Title</td>
+                            <td>@(capsule.IsOpened ? "Otwarte" : "Zamknięte")</td>
+                            <td>@capsule.OpenDate.ToShortDateString()</td>
+                            <td>
+
+                                <a asp-controller="CapsuleManagement"
+                                   asp-action="EditCapsuleDate"
+                                   asp-route-id="@capsule.CapsuleId"
+                                   class="btn btn-sm btn-warning">Zmień datę</a>
+
+
+                                <form asp-controller="CapsuleManagement"
+                                      asp-action="Delete"
+                                      asp-route-id="@capsule.CapsuleId"
+                                      method="post"
+                                      style="display:inline;">
+                                    <button type="submit" class="btn btn-sm btn-danger">Usuń</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
