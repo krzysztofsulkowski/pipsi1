@@ -14,20 +14,22 @@
     <link rel="stylesheet" href="~/css/authLayout.css" />
 </head>
 <body class="auth-page">
-    <div class="auth-logo">@Localizer["ApplicationName"]</div>
+    <header class="auth-logo">@Localizer["ApplicationName"]</header>
 
     @RenderBody()
 
-    <!-- stopka pomocy w lewym dolnym rogu -->
-    <div class="help-footer">
-        @Localizer["HelpText"]
-        <a href="#" class="help-btn"
-           data-bs-toggle="modal"
-           data-bs-target="#contactModal"
-           title="@Localizer["ContactUsTitle"]">
-            <span> ✉️</span>
-        </a>
-    </div>
+    <footer class="footer-wrapper">
+        <div class="footer-content">
+            <span>@Localizer["NeedHelp"]</span>
+            <a href="#" class="d-inline-flex align-items-center"
+               data-bs-toggle="modal"
+               data-bs-target="#contactModal"
+               title="@Localizer["ContactUsTitle"]">
+                <span class="footer-content-underline me-2">@Localizer["ContactUs"]</span>
+                <img src="~/images/mail-icon.png" alt="Mail icon" class="mail-icon" />
+            </a>
+        </div>
+    </footer>
 
     <partial name="~/Views/Shared/_ContactModalForm.cshtml" />
 

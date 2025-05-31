@@ -1,5 +1,4 @@
-﻿/* 1) Import fontów */
-@import url('https://fonts.googleapis.com/css2?family=Jost:wght@400;600;700&display=swap');
+﻿@import url('https://fonts.googleapis.com/css2?family=Jost:wght@400;600;700&display=swap');
 
 @font-face {
     font-family: 'Leckerli One';
@@ -9,7 +8,6 @@
     font-display: swap;
 }
 
-/* 2) Tło + centrowanie w pionie */
 body.auth-page {
     background-color: #98A4B4;
     display: flex;
@@ -20,11 +18,11 @@ body.auth-page {
     margin: 0;
     position: relative;
     font-family: 'Jost', sans-serif;
+    padding-top: 70px;
 }
 
-/* 3) Logo w lewym górnym rogu */
 .auth-logo {
-    position: absolute;
+    position: fixed;
     top: 1rem;
     left: 1rem;
     font-family: 'Leckerli One', cursive;
@@ -33,8 +31,8 @@ body.auth-page {
     z-index: 1000;
 }
 
-/* 4) Kafelek logowania */
 .login-modal {
+    margin-top: 5rem;
     background-color: #E4E4E4;
     border-radius: 1rem;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
@@ -45,7 +43,6 @@ body.auth-page {
     color: #475264;
 }
 
-    /* 5) Duży “×” */
     .login-modal .close-btn {
         position: absolute;
         top: 0.75rem;
@@ -58,7 +55,6 @@ body.auth-page {
         line-height: 1;
     }
 
-/* 6) Tytuł “Logowanie” */
 .login-title {
     text-align: center;
     font-size: 2rem;
@@ -66,7 +62,6 @@ body.auth-page {
     font-weight: 700;
 }
 
-/* 7) Węższe pola formularza */
 .login-form .form-floating {
     max-width: 600px;
     margin: 0 auto 1.5rem;
@@ -83,7 +78,6 @@ body.auth-page {
     color: #758395;
 }
 
-/* 8) “Nie pamiętam hasła” – wyrównane do lewej */
 .login-form .forgot-link {
     display: block;
     max-width: 600px;
@@ -98,7 +92,37 @@ body.auth-page {
         text-decoration: underline;
     }
 
-/* 9) Przycisk “Zaloguj się” */
+.btn-google {
+    display: block;
+    width: 240px;
+    margin: 0 auto;
+    background-color: white;
+    color: black;
+    border: none;
+    border-radius: 0.75rem;
+    padding: 0.75rem 1.5rem;
+    font-size: 1.1rem;
+    cursor: pointer;
+    text-decoration: none !important;
+    margin-top: -1rem;
+}
+
+    .btn-google:hover {
+        background-color: #cfcfcf;
+        color: black;
+    }
+
+    .btn-google:focus {
+        color: black;
+        background-color: #cfcfcf;
+    }
+
+.google-icon {
+    width: 20px;
+    height: 20px;
+    color: white;
+}
+
 .btn-login {
     display: block;
     width: 240px;
@@ -116,27 +140,25 @@ body.auth-page {
         opacity: 0.9;
     }
 
-/* 10) “* pole wymagane” */
 .required-note {
     display: block;
     max-width: 600px;
     margin: 1rem auto 0;
-    text-align: left; /* wyrównane do lewej */
+    text-align: left;
     font-size: 0.9rem;
-    color: #ffffff; /* biały, lepiej widoczny */
+    color: #ffffff;
 }
 
-/* 11) “Nie posiadasz konta? Zarejestruj się” */
 .post-modal-footer {
     max-width: 600px;
     margin: 1rem auto 0;
-    text-align: right; /* wyrównane do prawej */
+    text-align: right;
     font-size: 1rem;
     color: #ffffff;
 }
 
     .post-modal-footer .btn-register {
-        margin-left: 0; /* usuń odstęp po lewej */
+        margin-left: 0;
         background-color: #475264;
         color: #fff;
         border: none;
@@ -151,28 +173,34 @@ body.auth-page {
             opacity: 0.9;
         }
 
-/* 12) Stopka pomocy */
-.help-footer {
-    position: absolute;
-    bottom: 1rem;
-    left: 1rem;
-    color: #ffffff;
-    font-size: 0.9rem;
+.footer-wrapper {
+    width: 100%;
     display: flex;
-    align-items: center;
+    justify-content: flex-end;
+    padding: 1rem 1.5rem;
+    margin-top: auto;
 }
 
-    .help-footer .help-btn {
-        background: transparent;
-        border: none;
-        font-size: 1.5rem;
-        margin-left: 0.5rem;
-        cursor: pointer;
-        color: #ffffff;
-        text-decoration: none !important;
-    }
+.footer-content {
+    bottom: 15px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: white;
+    font-size: 18px;
+    white-space: nowrap;
+}
 
-/* 13) Responsywność */
+.footer-content-underline {
+    text-decoration: underline;
+    color: #fff;
+}
+
+.mail-icon {
+    width: 30px;
+}
+
 @media (max-width: 576px) {
     .login-modal {
         padding: 1.5rem 1.5rem 1rem;

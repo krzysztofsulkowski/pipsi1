@@ -32,11 +32,12 @@
         <button type="submit" class="btn-login">@Localizer["LoginButton"]</button>
 
         <div class="text-center mt-4">
-            <a asp-page="./ExternalLogin" asp-route-provider="Google" asp-route-returnUrl="~/"
-               class="btn-google d-flex align-items-center justify-content-center mx-auto">
-                @Localizer["LoginWithGoogle"]
+            <a asp-page="./ExternalLogin" asp-route-provider="Google" asp-route-returnUrl="~/" class="btn-google d-flex align-items-center justify-content-center mx-auto">
+                <img src="@Url.Content("~/images/google.svg")" alt="Google" class="google-icon" />
+                <span class="ms-2">@Localizer["LoginWithGoogle"]</span>
             </a>
         </div>
+
     </form>
 </div>
 

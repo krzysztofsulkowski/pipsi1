@@ -120,10 +120,10 @@
   <data name="ApplicationName" xml:space="preserve">
     <value>Time Capsule</value>
   </data>
-  <data name="ContactUsTitle" xml:space="preserve">
-    <value>Contact Us</value>
+  <data name="ContactUs" xml:space="preserve">
+    <value>Contact us!</value>
   </data>
-  <data name="HelpText" xml:space="preserve">
-    <value>need help? contact us!</value>
+  <data name="NeedHelp" xml:space="preserve">
+    <value>Need help?</value>
   </data>
 </root>
